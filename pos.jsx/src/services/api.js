@@ -17,7 +17,7 @@ async function apiFetch(path, token, options = {}) {
     let data = {};
     try {
       data = JSON.parse(text);
-    } catch (parseError) {
+    } catch {
       // Keep data empty for non-JSON responses
     }
 

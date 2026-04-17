@@ -90,7 +90,6 @@ export default function DashboardPage({ darkMode, onToggleDark, token, currentUs
 
         const totalRevenue = filtered.reduce((s, o) => s + o.total, 0)
         const totalOrders = filtered.length
-        const drinksSold = filtered.reduce((s, o) => s + o.items.reduce((a, i) => a + i.qty, 0), 0)
         const avgOrder = totalOrders > 0 ? totalRevenue / totalOrders : 0
 
         setSummary({ totalRevenue, totalOrders, avgOrder })
