@@ -104,7 +104,10 @@ router.patch('/:id/stock', requireAuth, requireAdmin, async (req, res) => {
 
     await db.query(`UPDATE products SET ${updates.join(', ')} WHERE id = ?`, values);
     const productRows = await db.query('SELECT * FROM products WHERE id = ?', [id]);
-    res.json(productRows[0] || null);
+    if (!productRows[0]) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    res.json(productRows[0]);
   } catch (error) {
     console.error('Update stock error:', error);
     res.status(500).json({ error: 'Unable to update stock' });

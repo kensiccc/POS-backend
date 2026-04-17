@@ -135,7 +135,12 @@ router.get('/', requireAuth, async (req, res) => {
       return map;
     }, {});
     items.forEach((item) => {
-      const attrs = item.attributes ? JSON.parse(item.attributes) : {};
+      let attrs = {};
+      try {
+        attrs = typeof item.attributes === 'string' ? JSON.parse(item.attributes) : (item.attributes || {});
+      } catch (e) {
+        console.error('JSON Parse error for attributes:', e);
+      }
       orderMap[item.order_id].push({
         name: item.product_name,
         qty: item.quantity,
