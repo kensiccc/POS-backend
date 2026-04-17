@@ -15,14 +15,16 @@ const baseDbConfig = {
 };
 
 async function ensureDatabaseExists() {
-  const connection = await mysql.createConnection({
-    host: baseDbConfig.host,
-    user: baseDbConfig.user,
-    password: baseDbConfig.password,
-  });
+  try {
+    const connection = await mysql.createConnection({
+      ...baseDbConfig
+    });
 
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci`);
-  await connection.end();
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci`);
+    await connection.end();
+  } catch (err) {
+    console.log('Skipping database creation (likely managed or already exists):', err.message);
+  }
 }
 
 const pool = mysql.createPool({
