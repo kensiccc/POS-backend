@@ -27,7 +27,7 @@ function parseRange(range, query) {
 router.get('/summary', requireAuth, async (req, res) => {
   try {
     const { from, to } = parseRange(req.query.range, req.query);
-    const [summaryRows] = await db.query(
+    const summaryRows = await db.query(
       `SELECT COUNT(*) AS totalOrders,
               COALESCE(SUM(total), 0) AS totalRevenue,
               COALESCE(AVG(total), 0) AS avgOrder

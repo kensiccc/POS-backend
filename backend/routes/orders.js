@@ -103,9 +103,8 @@ router.get('/', requireAuth, async (req, res) => {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 20;
     const offset = (page - 1) * limit;
-    const { from, to } = parseDateRange(req.query);
-
-    const [orders] = await db.query(
+    const [from, to] = [parseDateRange(req.query).from, parseDateRange(req.query).to];
+    const orders = await db.query(
       `SELECT o.id, o.order_number, o.customer_name, o.subtotal, o.discount_pct, o.discount_amount, o.total, o.cash, o.change_amount, o.promo_code, o.order_date, u.name AS cashier
        FROM orders o
        LEFT JOIN users u ON o.user_id = u.id
