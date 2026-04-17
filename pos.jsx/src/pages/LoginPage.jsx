@@ -66,7 +66,6 @@ export default function LoginPage({ onLogin, errorMessage }) {
             <p>Use demo credentials:</p>
             <p><strong>admin@houseblend.local</strong> / Admin123!</p>
             <p><strong>cashier@houseblend.local</strong> / Cashier123!</p>
-            <p className="login-note">Make sure the backend is running at <strong>http://localhost:3000</strong> or update <code>VITE_API_URL</code> in <code>pos.jsx/.env</code>.</p>
           </div>
         </form>
       </div>

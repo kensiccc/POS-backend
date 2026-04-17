@@ -28,7 +28,7 @@ async function apiFetch(path, token, options = {}) {
     return data;
   } catch (error) {
     if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
-      throw new Error(`Cannot reach backend at ${API_BASE}. Make sure the backend is running and VITE_API_URL is set correctly.`);
+      throw new Error('Cannot reach the server. Please check your network connection or try again later.');
     }
     throw error;
   }
