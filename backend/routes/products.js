@@ -38,6 +38,7 @@ router.get('/low-stock', async (req, res) => {
 router.post('/', requireAuth, requireAdmin, async (req, res) => {
   try {
     const { name, description, category, price, stock, threshold, imageUrl } = req.body;
+    console.log(`Creating product: ${name}, Image size: ${imageUrl ? imageUrl.length : 0} chars`);
     if (!name || price === undefined || stock === undefined) {
       return res.status(400).json({ error: 'Product name, price, and stock are required' });
     }
