@@ -85,12 +85,15 @@ async function createTables() {
       price DECIMAL(10,2) NOT NULL DEFAULT 0,
       stock INT NOT NULL DEFAULT 0,
       threshold INT NOT NULL DEFAULT 10,
-      image_url VARCHAR(500) DEFAULT '',
+      image_url LONGTEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
     ) ENGINE=InnoDB;
   `);
+
+  // Ensure existing database image_url column is large enough for Base64 strings
+  await query(`ALTER TABLE products MODIFY COLUMN image_url LONGTEXT;`).catch(() => {});
 
   await query(`
     CREATE TABLE IF NOT EXISTS orders (
