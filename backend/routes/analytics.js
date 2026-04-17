@@ -35,7 +35,15 @@ router.get('/summary', requireAuth, async (req, res) => {
        WHERE DATE(order_date) BETWEEN ? AND ?`,
       [from, to]
     );
-    res.json({ ...summaryRows[0], from, to });
+
+    const stats = summaryRows[0] || { totalOrders: 0, totalRevenue: 0, avgOrder: 0 };
+    res.json({
+      totalOrders: stats.totalOrders || 0,
+      totalRevenue: stats.totalRevenue || 0,
+      avgOrder: stats.avgOrder || 0,
+      from,
+      to
+    });
   } catch (error) {
     console.error('Analytics summary error:', error);
     res.status(500).json({ error: 'Unable to load analytics' });
