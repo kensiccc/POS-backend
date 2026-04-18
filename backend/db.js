@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const dbName = process.env.DB_NAME || 'houseblend_pos';
 const baseDbConfig = {
   host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 3306,
+  port: parseInt(process.env.DB_PORT || '3306', 10),
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   ssl: process.env.DB_HOST && process.env.DB_HOST !== 'localhost' ? { rejectUnauthorized: false } : undefined,
@@ -12,6 +12,7 @@ const baseDbConfig = {
   connectionLimit: 10,
   queueLimit: 0,
   decimalNumbers: true,
+  connectTimeout: 20000,
 };
 
 async function ensureDatabaseExists() {

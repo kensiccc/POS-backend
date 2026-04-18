@@ -23,16 +23,18 @@ app.use('/api/demo', demoRoutes);
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 const port = parseInt(process.env.PORT, 10) || 3000;
+
+// Start the server immediately so Render detects it's alive
+app.listen(port, () => {
+  console.log('');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log(`  ☕ House Blend POS API listening on port ${port}`);
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+});
+
+// Then set up the database tables in the background (non-blocking)
 createTables()
-  .then(() => {
-    app.listen(port, () => {
-      console.log('');
-      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-      console.log(`  ☕ House Blend POS API listening on port ${port}`);
-      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    });
-  })
+  .then(() => console.log('✅ Database tables ready'))
   .catch((error) => {
-    console.error('Unable to start server:', error);
-    process.exit(1);
+    console.error('⚠️ Database setup error (server still running):', error.message);
   });
