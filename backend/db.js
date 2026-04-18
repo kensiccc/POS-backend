@@ -92,8 +92,12 @@ async function createTables() {
     ) ENGINE=InnoDB;
   `);
 
-  // Ensure existing database image_url column is large enough for Base64 strings
-  await query(`ALTER TABLE products MODIFY COLUMN image_url LONGTEXT;`).catch(() => {});
+  // Safely try to migrate image_url column to LONGTEXT (non-fatal)
+  try {
+    await query(`ALTER TABLE products MODIFY COLUMN image_url LONGTEXT;`);
+  } catch (e) {
+    // Already LONGTEXT or restricted - safe to ignore
+  }
 
   await query(`
     CREATE TABLE IF NOT EXISTS orders (
