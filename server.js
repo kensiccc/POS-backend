@@ -28,7 +28,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 app.listen(port, () => {
   console.log('');
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log(`  ☕ House Blend POS API listening on port ${port}`);
+  console.log(`  ☕ Sample POS API by Dev Kensic listening on port ${port}`);
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 });
 
